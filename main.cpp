@@ -63,24 +63,19 @@ bool placeEnd = false;
 bool hasStart = false;
 bool hasEnd = false;
 
-bool canStart = true;
+bool canStart = false;
 bool active = false;
-
+bool found = false;
 sf::Vector2i startPos;
 sf::Vector2i endPos;
+
+sf::Color open = sf::Color(145, 247, 131);
+sf::Color closed = sf::Color(66, 126, 255);
 
 //gfg link explanation: https://www.geeksforgeeks.org/a-search-algorithm/
 
 //@return returns true if target tile is found
 bool findSurroundingTile(int tileX,int tileY){
-    /*
-    surrounding tile positions y - 1, x - 1, x + 1, y + 1
-    check if they are target
-    check if target in call function
-    dont return if:
-        is wall
-        is blue (already searched)
-    */
 
    std::vector<sf::Vector2i> sur;//all possible positions around the current pos
     sur.push_back(sf::Vector2i(tileX-1,tileY));
@@ -88,40 +83,36 @@ bool findSurroundingTile(int tileX,int tileY){
     sur.push_back(sf::Vector2i(tileX+1,tileY));
     sur.push_back(sf::Vector2i(tileX,tileY+1));
 
-   //if(tileX != startPos.x && tileY != startPos.y) grid[tileX][tileY].color = sf::Color::Blue;
+    for(int i = 0; i < sur.size(); i++){
+        if(sur.at(i) == endPos){
+            return true;
+        }
+    }
 
-    grid[tileX-1][tileY].color = sf::Color::Green;
-    grid[tileX+1][tileY].color = sf::Color::Green;
-    grid[tileX][tileY-1].color = sf::Color::Green;
-    grid[tileX][tileY+1].color = sf::Color::Green;
+    //check sides of each for green to not check there
 
-    openSet.pop_back();
+    if((grid[tileX-1][tileY].color == sf::Color::White) && tileX - 1 >= 0){
+        grid[tileX-1][tileY].color = open;
+        openSet.push_back(grid[tileX-1][tileY]);
+    }
+     if((grid[tileX+1][tileY].color == sf::Color::White) && tileX + 1 <= 49){
+        grid[tileX+1][tileY].color = open;
+        openSet.push_back(grid[tileX+1][tileY]);
+    }
+    if((grid[tileX][tileY+1].color == sf::Color::White) && tileY + 1 <= 49){
+        grid[tileX][tileY+1].color = open;
+        openSet.push_back(grid[tileX][tileY+1]);
+    }
+     if((grid[tileX][tileY-1].color == sf::Color::White) && tileY - 1 >= 0){
+        grid[tileX][tileY-1].color = open;
+        openSet.push_back(grid[tileX][tileY-1]);
+    }
 
-    openSet.push_back(grid[tileX-1][tileY]);
-    openSet.push_back(grid[tileX+1][tileY]);
-    openSet.push_back(grid[tileX][tileY-1]);
-    openSet.push_back(grid[tileX][tileY+1]);
+    grid[tileX][tileY].color = closed;
+    closedSet.push_back(grid[tileX][tileY]);
+    
 
-    // for(int i = 0; i < sur.size(); i++){
-    //     grid[sur.at(i).x][sur.at(i).y].color = sf::Color::Blue;
-    // }
 
-//    if((tileX == endPos.x && tileY-1 == endPos.y) || (tileX-1 == endPos.x && tileY == endPos.y) || (tileX+1 == endPos.x && tileY == endPos.y) || (tileX == endPos.x && tileY+1 == endPos.y)){
-//     return true;
-//    }else if((grid[tileX-1][tileY].color != sf::Color::Blue) || (grid[tileX-1][tileY].color != sf::Color::Black)){
-//     //add to open set
-//     openSet.push_back(grid[tileX-1][tileY]);
-//    }else if((grid[tileX][tileY-1].color != sf::Color::Blue) || (grid[tileX][tileY-1].color != sf::Color::Black)){
-//     openSet.push_back(grid[tileX][tileY-1]);
-//    }else if((grid[tileX+1][tileY].color != sf::Color::Blue) || (grid[tileX+1][tileY].color != sf::Color::Black)){
-//     openSet.push_back(grid[tileX+1][tileY]);
-//    }else if((grid[tileX][tileY+1].color != sf::Color::Blue) || (grid[tileX][tileY+1].color != sf::Color::Black)){
-//     openSet.push_back(grid[tileX][tileY+1]);
-//    }
-
-     //remove(openSet.begin(),openSet.end(), grid[tileX][tileY]);
-     
-     //closedSet.push_back(grid[tileX][tileY]);
    return false;//default return value
 }
 
@@ -137,6 +128,7 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "A* Pathfinding Visualization");
     //window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+    window.setFramerateLimit(20);
     sf::Font font;
     if (!font.loadFromFile("arial.ttf"))
     {
@@ -172,6 +164,11 @@ int main()
 
     while (window.isOpen())
     {
+
+        if(hasStart && hasEnd){
+            canStart = true;
+        }
+
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -190,6 +187,7 @@ int main()
                 window.close();
             else if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                 //place a black tile there
+                if(!active){
                 sf::Vector2i mPos = sf::Mouse::getPosition(window);
                 int x = mPos.x/10;
                     int y = mPos.y/10;
@@ -199,6 +197,7 @@ int main()
                     endPos = sf::Vector2i(x,y);
                     placeStart = false;
                     hasStart = true;//prevent multiple start tiles
+                    startPos = sf::Vector2i(x,y);
                     openSet.push_back(grid[x][y]);
                 }else if(placeEnd && !hasEnd){//place end
                     grid[x][y].setColor(sf::Color::Red);
@@ -208,6 +207,8 @@ int main()
                 }else{
                     grid[mPos.x/10][mPos.y/10].setColor(sf::Color::Black);
                 }
+                }
+                
             }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
                 //next tile placed will be the starting tile green
                 placeStart = true;
@@ -220,7 +221,6 @@ int main()
                 reset();
             }
             
-           
         }
 
         window.clear(sf::Color::Black);
@@ -235,18 +235,15 @@ int main()
             
         }
 
-    // if(active){//testing
-    // std::cout << openSet.at(0).getX() << " " << openSet.at(0).getY() << std::endl;
-    //     findSurroundingTile(openSet.at(0).getX(),openSet.at(0).getY());
-    //     active = false;
-    // }
-
-        if(active){
-            for(int i = 0; i < openSet.size(); i++){
+        if(active && !found){
+            int curSize = openSet.size();
+            for(int i = 0; i < curSize; i++){
                 if(findSurroundingTile(openSet.at(i).getX(),openSet.at(i).getY())){
                     active = false;
-                 
+                    found = true;
+                    std::cout << "End Point Found" << std::endl;
                 }
+                openSet.erase(openSet.begin() + i);
         }
         }
         window.display();
