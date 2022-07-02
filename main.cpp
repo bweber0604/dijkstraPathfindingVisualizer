@@ -82,6 +82,9 @@ sf::Vector2i endPos;
 
 int steps = 0;
 
+//prgram crashes at certain point of drawing too many walls
+
+
 sf::Color open = sf::Color(145, 247, 131);
 sf::Color closed = sf::Color(66, 126, 255);
 
@@ -283,7 +286,7 @@ int main()
                 endTile = &grid[endTile->getParent().x][endTile->getParent().y];
                 if(endTile->getX() == startPos.x && endTile->getY() == startPos.y) break;
             }
-            found = false;
+            
         }
         window.display();
     }
