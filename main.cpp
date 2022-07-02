@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <random>
 #include <iostream>
+#include <queue>
 #include <vector>
 
 const int WIDTH = 500;
@@ -11,10 +12,11 @@ class Tile{
         sf::Vector2f pos;
         int width = 9;
         int height = 9;
-
+        sf::Vector2i parentPos;//hold the previous tile that found this tile as its neighbor (in my head this works perfectly)
+        
     public:
         sf::Color color = sf::Color::White;
-        Tile() : pos(sf::Vector2f(0,0)){}
+        Tile() : pos(sf::Vector2f(0,0)){ }
 
         Tile(int x, int y) : pos(sf::Vector2f(x,y)){}
 
@@ -41,7 +43,15 @@ class Tile{
             pos.y = x;
         }
 
-        
+        void setParent(int tx,int ty){
+            this->parentPos.x = tx;
+            this->parentPos.y = ty;
+            
+        }
+
+        sf::Vector2i getParent(){
+            return this->parentPos;
+        }
 
         void setPos(int x, int y){
             pos = sf::Vector2f(x,y);
@@ -54,8 +64,9 @@ class Tile{
 
 Tile grid[50][50];
 
-std::vector<Tile> openSet;
-std::vector<Tile>  closedSet;
+std::queue<Tile> openSet;
+std::queue<Tile>  closedSet;
+std::queue<Tile> path;
 
 bool placeStart = false;
 bool placeEnd = false;
@@ -69,10 +80,11 @@ bool found = false;
 sf::Vector2i startPos;
 sf::Vector2i endPos;
 
+int steps = 0;
+
 sf::Color open = sf::Color(145, 247, 131);
 sf::Color closed = sf::Color(66, 126, 255);
 
-//gfg link explanation: https://www.geeksforgeeks.org/a-search-algorithm/
 
 //@return returns true if target tile is found
 bool findSurroundingTile(int tileX,int tileY){
@@ -85,6 +97,7 @@ bool findSurroundingTile(int tileX,int tileY){
 
     for(int i = 0; i < sur.size(); i++){
         if(sur.at(i) == endPos){
+            grid[endPos.x][endPos.y].setParent(tileX,tileY);
             return true;
         }
     }
@@ -93,25 +106,28 @@ bool findSurroundingTile(int tileX,int tileY){
 
     if((grid[tileX-1][tileY].color == sf::Color::White) && tileX - 1 >= 0){
         grid[tileX-1][tileY].color = open;
-        openSet.push_back(grid[tileX-1][tileY]);
+        grid[tileX-1][tileY].setParent(tileX,tileY);
+
+        openSet.push(grid[tileX-1][tileY]);
     }
      if((grid[tileX+1][tileY].color == sf::Color::White) && tileX + 1 <= 49){
         grid[tileX+1][tileY].color = open;
-        openSet.push_back(grid[tileX+1][tileY]);
+        grid[tileX+1][tileY].setParent(tileX,tileY);
+        openSet.push(grid[tileX+1][tileY]);
     }
     if((grid[tileX][tileY+1].color == sf::Color::White) && tileY + 1 <= 49){
         grid[tileX][tileY+1].color = open;
-        openSet.push_back(grid[tileX][tileY+1]);
+        grid[tileX][tileY+1].setParent(tileX,tileY);
+        openSet.push(grid[tileX][tileY+1]);
     }
      if((grid[tileX][tileY-1].color == sf::Color::White) && tileY - 1 >= 0){
         grid[tileX][tileY-1].color = open;
-        openSet.push_back(grid[tileX][tileY-1]);
+        grid[tileX][tileY-1].setParent(tileX,tileY);
+        openSet.push(grid[tileX][tileY-1]);
     }
 
     grid[tileX][tileY].color = closed;
-    closedSet.push_back(grid[tileX][tileY]);
-    
-
+    closedSet.push(grid[tileX][tileY]);
 
    return false;//default return value
 }
@@ -127,8 +143,7 @@ int main()
     }
 
     sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "A* Pathfinding Visualization");
-    //window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-    window.setFramerateLimit(20);
+    window.setFramerateLimit(45);
     sf::Font font;
     if (!font.loadFromFile("arial.ttf"))
     {
@@ -136,20 +151,28 @@ int main()
     }
 
     auto reset = [](){
-     bool placeStart = false;
-    bool placeEnd = false;
+    placeStart = false;
+     placeEnd = false;
 
-    bool hasStart = false;
-    bool hasEnd = false;
+     hasStart = false;
+     hasEnd = false;
 
-    bool canStart = true;
-    bool active = false;
+     canStart = false;
+     active = false;
+     found = false;
+
+    steps = 0;
 
      startPos = sf::Vector2i(0,0);
      endPos = sf::Vector2i(0,0);
 
-     openSet.clear();
-     closedSet.clear();
+     while(!openSet.empty()){
+        openSet.pop();
+     }
+
+     while(!closedSet.empty()){
+        closedSet.pop();
+     }
 
         for (size_t i = 0; i < sizeof(grid)/sizeof(grid[0]); i++)
         {
@@ -180,7 +203,6 @@ int main()
                 //start pathfinding alg here
                 canStart = false;
                 active = true;
-                std::cout << "starting pathfinding" << std::endl;
                 }
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
@@ -194,57 +216,74 @@ int main()
                 //invert pos calculation to find tile pos
                 if(placeStart && !hasStart){//place start
                     grid[x][y].setColor(sf::Color::Green);
-                    endPos = sf::Vector2i(x,y);
+                    startPos = sf::Vector2i(x,y);
                     placeStart = false;
                     hasStart = true;//prevent multiple start tiles
-                    startPos = sf::Vector2i(x,y);
-                    openSet.push_back(grid[x][y]);
+                    openSet.push(grid[x][y]);
                 }else if(placeEnd && !hasEnd){//place end
                     grid[x][y].setColor(sf::Color::Red);
                     endPos = sf::Vector2i(x,y);
                     placeEnd = false;
                     hasEnd = true;
                 }else{
-                    grid[mPos.x/10][mPos.y/10].setColor(sf::Color::Black);
+                    if(hasStart && x == startPos.x && y == startPos.y) break;//prevent start from being covered
+                    if(hasEnd && x == endPos.x && y == endPos.y) break;//prevent end from being covered by walls
+                    
+                    grid[x][y].setColor(sf::Color::Black);
                 }
                 }
                 
             }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
                 //next tile placed will be the starting tile green
-                placeStart = true;
-                placeEnd = false;
+                if(!hasStart && !placeStart){
+                    placeStart = true;
+                    placeEnd = false;
+                }
             }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::T)){
                 //next tile placed will be the target tile Red
+                if(!hasEnd && !placeEnd){
                 placeEnd = true;
                 placeStart = false;
+                }
             }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::R)){
                 reset();
             }
             
+            if(hasStart && hasEnd){//establish when the program is allowed to be started
+                canStart = true;
+            }
         }
 
         window.clear(sf::Color::Black);
 
-       //draw here
-        for (size_t i = 0; i < sizeof(grid)/sizeof(grid[0]); i++)
-        {
-            for (size_t j = 0; j < sizeof(grid)/sizeof(grid[0]); j++)
-            {
+      //draw the tiles every frame
+        for (size_t i = 0; i < sizeof(grid)/sizeof(grid[0]); i++){
+            for (size_t j = 0; j < sizeof(grid)/sizeof(grid[0]); j++) {
                 window.draw(grid[i][j].Render());
             }
             
         }
-
+        
         if(active && !found){
+            steps++;//track the steps it takes to find the end so it can be reversed
             int curSize = openSet.size();
-            for(int i = 0; i < curSize; i++){
-                if(findSurroundingTile(openSet.at(i).getX(),openSet.at(i).getY())){
+            for(int i = 0; i < openSet.size(); i++){
+                if(findSurroundingTile(openSet.front().getX(),openSet.front().getY())){
                     active = false;
                     found = true;
-                    std::cout << "End Point Found" << std::endl;
                 }
-                openSet.erase(openSet.begin() + i);
+                openSet.pop();
+            }
         }
+
+        if(found){
+            Tile* endTile = &grid[endPos.x][endPos.y];
+            for(int i = 0; i < steps; i++){
+                endTile->color = sf::Color::Red;
+                endTile = &grid[endTile->getParent().x][endTile->getParent().y];
+                if(endTile->getX() == startPos.x && endTile->getY() == startPos.y) break;
+            }
+            found = false;
         }
         window.display();
     }
