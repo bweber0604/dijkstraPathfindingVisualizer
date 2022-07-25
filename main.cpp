@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <random>
 #include <iostream>
 #include <queue>
 #include <vector>
@@ -77,13 +76,15 @@ bool hasEnd = false;
 bool canStart = false;
 bool active = false;
 bool found = false;
+bool helpOpen = false;
 sf::Vector2i startPos;
 sf::Vector2i endPos;
 
 int steps = 0;
 
-//prgram crashes at certain point of drawing too many walls
+bool impossible = false;
 
+//prgram crashes at certain point of drawing too many walls
 
 sf::Color open = sf::Color(145, 247, 131);
 sf::Color closed = sf::Color(66, 126, 255);
@@ -145,8 +146,8 @@ int main()
         std::cout << "Error loading Icon" << std::endl;
     }
 
-    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "A* Pathfinding Visualization");
-    window.setFramerateLimit(45);
+    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Dijkstra Pathfinding Visualization");
+    window.setFramerateLimit(60);
     sf::Font font;
     if (!font.loadFromFile("arial.ttf"))
     {
@@ -163,9 +164,9 @@ int main()
      canStart = false;
      active = false;
      found = false;
-
+    impossible = false;
     steps = 0;
-
+    helpOpen = false;
      startPos = sf::Vector2i(0,0);
      endPos = sf::Vector2i(0,0);
 
@@ -206,6 +207,7 @@ int main()
                 //start pathfinding alg here
                 canStart = false;
                 active = true;
+                openSet.push(grid[startPos.x][startPos.y]);
                 }
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
@@ -222,7 +224,6 @@ int main()
                     startPos = sf::Vector2i(x,y);
                     placeStart = false;
                     hasStart = true;//prevent multiple start tiles
-                    openSet.push(grid[x][y]);
                 }else if(placeEnd && !hasEnd){//place end
                     grid[x][y].setColor(sf::Color::Red);
                     endPos = sf::Vector2i(x,y);
@@ -236,13 +237,26 @@ int main()
                 }
                 }
                 
+            }else if(sf::Mouse::isButtonPressed(sf::Mouse::Right)){
+            //erase tile
+            if(!active){
+                sf::Vector2i mPos = sf::Mouse::getPosition(window);
+                int x = mPos.x/10;
+                int y = mPos.y/10;
+                
+                if(grid[x][y].color == sf::Color::Green) hasStart = false;
+                if(grid[x][y].color == sf::Color::Red) hasEnd = false;
+                
+                grid[x][y].setColor(sf::Color::White);
+                
+            }
             }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
                 //next tile placed will be the starting tile green
                 if(!hasStart && !placeStart){
                     placeStart = true;
                     placeEnd = false;
                 }
-            }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::T)){
+            }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
                 //next tile placed will be the target tile Red
                 if(!hasEnd && !placeEnd){
                 placeEnd = true;
@@ -250,6 +264,9 @@ int main()
                 }
             }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::R)){
                 reset();
+            }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::H)){
+                //show a new menu with the controls to the program
+                helpOpen = true;
             }
             
             if(hasStart && hasEnd){//establish when the program is allowed to be started
@@ -259,6 +276,8 @@ int main()
 
         window.clear(sf::Color::Black);
 
+
+
       //draw the tiles every frame
         for (size_t i = 0; i < sizeof(grid)/sizeof(grid[0]); i++){
             for (size_t j = 0; j < sizeof(grid)/sizeof(grid[0]); j++) {
@@ -266,11 +285,59 @@ int main()
             }
             
         }
+            sf::RectangleShape background(sf::Vector2f(300,100));
+            background.setFillColor(sf::Color(148, 148, 146,240));
+            background.setPosition(WIDTH/2- 150,HEIGHT/2- 130);
+            
         
+            sf::Text noPathText("No Possible Path",font,25);
+            noPathText.setPosition(WIDTH/2- 100,HEIGHT/2- 100);
+            noPathText.setFillColor(sf::Color::Red);
+
+            sf::RectangleShape helpBackground(sf::Vector2f(250,25));
+            helpBackground.setFillColor(sf::Color(148, 148, 146,200));
+            window.draw(helpBackground);
+
+            //help text
+            sf::Text helpText("How to use the Program: H",font, 20);
+            helpText.setPosition(0,0);
+            helpText.setFillColor(sf::Color::Black);
+            window.draw(helpText);
+
+            sf::RectangleShape helpTextBG(sf::Vector2f(450,450));
+            helpTextBG.setFillColor(sf::Color(148, 148, 146,250));
+            helpTextBG.setPosition(25,25);
+            
+        
+            sf::Text instructions("Controls: \n Left Click to Draw with the mouse \n and create barriers \n \n S: the next tile that is placed will be the start tile  \n E: the next tile that is placed will be the end tile \n R: reset all parts of program \n \n \n Press R to close this menu",font,20);
+            instructions.setPosition(35,35);
+            instructions.setFillColor(sf::Color::Black);            
+
+
+        if(impossible){
+            window.draw(background);
+           window.draw(noPathText);
+        }else if(helpOpen){
+            window.draw(helpTextBG);
+            window.draw(instructions);
+        }
+
+
+
         if(active && !found){
+
+                if(openSet.empty()){
+                    std::cout << "No Possible Path" << std::endl;
+                    active = false;
+                    impossible = true;
+                }
+
             steps++;//track the steps it takes to find the end so it can be reversed
             int curSize = openSet.size();
             for(int i = 0; i < openSet.size(); i++){
+
+                
+
                 if(findSurroundingTile(openSet.front().getX(),openSet.front().getY())){
                     active = false;
                     found = true;

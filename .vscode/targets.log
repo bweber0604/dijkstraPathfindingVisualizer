@@ -8,7 +8,7 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # This program built for i386-pc-mingw32
  
 
-# Make data base, printed on Sat Jul 02 20:03:30 2022
+# Make data base, printed on Mon Jul 25 17:14:34 2022
 
 # Variables
 
@@ -18,8 +18,6 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 ?F = $(notdir $?)
 # makefile
 MAKEFLAGS = Rrqp
-# environment
-VSCODE_LOG_NATIVE = false
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
@@ -53,17 +51,13 @@ FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
 TMP = C:\Users\benka\AppData\Local\Temp
 # environment
-VSCODE_VERBOSE_LOGGING = true
-# environment
 PROGRAMW6432 = C:\Program Files
 # environment
 PROGRAMDATA = C:\ProgramData
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-4df6996c-8db3-4ee5-a02b-02408921101f-sock
-# environment
 VSCODE_CWD = C:\Users\benka\AppData\Local\Programs\Microsoft VS Code
 # environment
-PATH = C:\Python310\Scripts\;C:\Python310\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Java\jdk-13.0.1\bin;C:\Program Files\gradle-4.9\bin\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\gradle-4.9\bin\;C:\Users\benka\AppData\Local\Programs\Python\Python38-32\;C:\Users\benka\AppData\Local\Programs\Python\Python38-32\Scripts\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Users\benka\Desktop\dart-sass-1.26.10-windows-x64\dart-sass\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\GnuWin32\bin;C:\mingw64\bin;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\benka\AppData\Local\Microsoft\WindowsApps;C:\Users\benka\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2020.3.1\bin;;C:\Users\benka\.dotnet\tools;C:\Users\benka\Desktop\dart-sass-1.26.10-windows-x64\dart-sass;C:\Program Files\gradle-4.9\bin;C:\Users\benka\AppData\Local\GitHubDesktop\bin;C:\Users\benka\AppData\Roaming\npm
+PATH = C:\Python310\Scripts\;C:\Python310\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\Java\jdk-13.0.1\bin;C:\Program Files\gradle-4.9\bin\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\gradle-4.9\bin\;C:\Users\benka\AppData\Local\Programs\Python\Python38-32\;C:\Users\benka\AppData\Local\Programs\Python\Python38-32\Scripts\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Users\benka\Desktop\dart-sass-1.26.10-windows-x64\dart-sass\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\GnuWin32\bin;C:\mingw64\bin;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\benka\AppData\Local\Microsoft\WindowsApps;C:\Users\benka\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2020.3.1\bin;;C:\Users\benka\.dotnet\tools;C:\Users\benka\Desktop\dart-sass-1.26.10-windows-x64\dart-sass;C:\Program Files\gradle-4.9\bin;C:\Users\benka\AppData\Local\GitHubDesktop\bin;C:\Users\benka\AppData\Roaming\npm
 # environment
 COMMONPROGRAMW6432 = C:\Program Files\Common Files
 # environment
@@ -77,8 +71,6 @@ CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
 # environment
 ALLUSERSPROFILE = C:\ProgramData
 # environment
-VSCODE_LOG_STACK = false
-# environment
 NUMBER_OF_PROCESSORS = 16
 # environment
 ELECTRON_RUN_AS_NODE = 1
@@ -89,9 +81,7 @@ VPROJECT = D:\Program Files (x86)\Steam\steamapps\common\team fortress 2\tf
 # automatic
 %F = $(notdir $%)
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_8448_WJEEJJWWCAVAGLJK
-# environment
-VSCODE_PIPE_LOGGING = true
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_5828_UMJNEIACYNVMYERT
 # environment
 COMPUTERNAME = BENSDESKTOP
 # environment
@@ -111,9 +101,9 @@ PUBLIC = C:\Users\Public
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
-VSCODE_CODE_CACHE_PATH = C:\Users\benka\AppData\Roaming\Code\CachedData\30d9c6cd9483b2cc586687151bcbcd635f373630
+VSCODE_CODE_CACHE_PATH = C:\Users\benka\AppData\Roaming\Code\CachedData\3b889b090b5ad5793f524b5d1d39fda662b96a2a
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
 # environment
@@ -157,7 +147,8 @@ PROCESSOR_IDENTIFIER = AMD64 Family 23 Model 1 Stepping 1, AuthenticAMD
 # environment
 OS = Windows_NT
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\f7e79fc2920277e8924a678726a998b6-1.68.1-main-sock
+VSCOD 
+E_IPC_HOOK = \\.\pipe\f7e79fc2920277e8924a678726a998b6-1.69.2-main-sock
 # environment
 HOMEPATH = \Users\benka
 # environment
@@ -209,11 +200,11 @@ PROCESSOR_LEVEL = 23
 # environment
 FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
-VSCODE_PID = 8448
+VSCODE_PID = 5828
 # environment
 USERDOMAIN_ROAMINGPROFILE = BENSDESKTOP
 # variable set hash-table stats:
-# Load=100/1024=10%, Rehash=0, Collisions=9/122=7%
+# Load=95/1024=9%, Rehash=0, Collisions=9/117=8%
 
 # Pattern-specific Variable Values
 
@@ -227,10 +218,11 @@ USERDOMAIN_ROAMINGPROFILE = BENSDESKTOP
 # C:\Program Files\Java\jdk-13.0.1\bin (key C:/Program Files/Java/jdk-13.0.1/bin, mtime 1577766056): 126 files, no impossibilities.
 # C:\Users\benka\AppData\Local\Programs\Python\Python38-32\Scripts\ (key C:/Users/benka/AppData/Local/Programs/Python/Python38-32/Scripts/, mtime 1620008861): 58 files, no impossibilities.
 # C:\Windows\System32\WindowsPowerShell\v1.0\ (key C:/Windows/System32/WindowsPowerShell/v1.0/, mtime 1604909985): 30 files, no impossibilities.
-# C:\Windows\System32\Wbem (key C:/Windows/System32/Wbem, mtime 1656441251): 155 files, no impossibilities.
-# . (key c:/Users/benka/Desktop/AstarPathfindingVisualizer, mtime 1656783485): 22 files, no impossibilities.
+# C:\Windows\System32\Wbem (key C:/Windows/System32/Wbem, mtime 1658184685): 154 files, no impossibilities.
+# . (key c:/Users/benka/Desktop/AstarPathfindingVisualizer, mtime 1658527856): 22 files, no impossibilities.
 # C:\Program Files\nodejs\ (key C:/Program Files/nodejs/, mtime 1652472924): 13 files, no impossibilities.
-# C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common (key C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common, mtime 1610038497): 10 files, no impossibilities.
+# C:\Program Files (x86)\NVIDIA 
+ Corporation\PhysX\Common (key C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common, mtime 1610038497): 10 files, no impossibilities.
 # C:\Program Files\MySQL\MySQL Server 8.0\bin (key C:/Program Files/MySQL/MySQL Server 8.0/bin, mtime 1653261268): 57 files, no impossibilities.
 # C:\ProgramData\chocolatey\bin (key C:/ProgramData/chocolatey/bin, mtime 1652472954): 11 files, no impossibilities.
 # C:\Program Files\dotnet\ (key C:/Program Files/dotnet/, mtime 1640468605): 13 files, no impossibilities.
@@ -239,28 +231,31 @@ USERDOMAIN_ROAMINGPROFILE = BENSDESKTOP
 # C:\Program Files\MySQL\MySQL Shell 8.0\bin\ (key C:/Program Files/MySQL/MySQL Shell 8.0/bin/, mtime 1653261762): 9 files, no impossibilities.
 # C:\Users\benka\Desktop\dart-sass-1.26.10-windows-x64\dart-sass\: could not be stat'd.
 # C:\Windows\System32\OpenSSH\: could not be stat'd.
+# C:\Program Files (x86)\Common Files\Oracle\Java\javapath (key C:/Program Files (x86)/Common Files/Oracle/Java/javapath, mtime 1658258238): 5 files, no impossibilities.
 # C:\mingw64\bin (key C:/mingw64/bin, mtime 1521554570): 59 files, no impossibilities.
-# C:\Windows (key C:/Windows, mtime 1656441249): 112 files, no impossibilities.
-# C:\Users\benka\AppData\Local\Programs\Microsoft VS Code\bin (key C:/Users/benka/AppData/Local/Programs/Microsoft VS Code/bin, mtime 1655323545): 4 files, no impossibilities.
-# C:\Program Files\JetBrains\PyCharm Community Edition 2020.3.1\bin (key C:/Program Files/JetBrains/PyCharm Community Edition 2020.3.1/bin, mtime 1608595567): 28 files, no impossibilities.
+# C:\Windows (key C:/Windows, mtime 1658184684): 112 files, no impossibilities.
+# C:\Users\benka\AppData\Local\Programs\Microsoft VS Code\bin (key C:/Users/benka/AppData/Local/Programs/Microsoft VS Code/bin, mtime 1658367516): 4 files, no impossibilities.
+# C:\Program Files\JetBrains\PyCharm Community E 
+dition 2020.3.1\bin (key C:/Program Files/JetBrains/PyCharm Community Edition 2020.3.1/bin, mtime 1608595567): 28 files, no impossibilities.
 # C:\Users\benka\AppData\Roaming\npm (key C:/Users/benka/AppData/Roaming/npm, mtime 1652472919): 2 files, no impossibilities.
 # C:\Users\benka\.dotnet\tools: could not be stat'd.
 # C:\Users\benka\Desktop\dart-sass-1.26.10-windows-x64\dart-sass: could not be stat'd.
-# C:\Program Files\Git\cmd (key C:/Program Files/Git/cmd, mtime 1598806411): 8 files, no impossibilities.
-# C:\Windows\system32 (key C:/Windows/system32, mtime 1656502852): 3003 files, no impossibilities.
+# C:\Program Files\Git\cmd (key C:/Program Files/Git/cmd, mtime 1598806411): 8 files, no impossibilities. 
+
+# C:\Windows\system32 (key C:/Windows/system32, mtime 1658756013): 3007 files, no impossibilities.
 # C:\Program Files\gradle-4.9\bin\ (key C:/Program Files/gradle-4.9/bin/, mtime 1617590773): 4 files, no impossibilities.
 # C:\Users\benka\AppData\Local\GitHubDesktop\bin (key C:/Users/benka/AppData/Local/GitHubDesktop/bin, mtime 1630548320): 4 files, no impossibilities.
-# C:\Users\benka\AppData\Local\Microsoft\WindowsApps (key C:/Users/benka/AppData/Local/Microsoft/WindowsApps, mtime 1656197700): 15 files, no impossibilities.
+# C:\Users\benka\AppData\Local\Microsoft\WindowsApps (key C:/Users/benka/AppData/Local/Microsoft/WindowsApps, mtime 1658441821): 15 files, no impossibilities.
 # C:\Program Files\gradle-4.9\bin (key C:/Program Files/gradle-4.9/bin, mtime 1617590773): 4 files, no impossibilities.
 # C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR (key C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR, mtime 1599778933): 5 files, no impossibilities.
 # C:\Program Files (x86)\GnuWin32\bin (key C:/Program Files (x86)/GnuWin32/bin, mtime 1654134099): 5 files, no impossibilities.
 
-# 3806 files, no impossibilities in 33 directori 
-es.
+# 3814 files, no impossibilities in 34 directories.
 
 # Implicit Rules
 
-# No implicit rules.
+# No implicit r 
+ules.
 
 # Files
 
@@ -300,11 +295,11 @@ makefile:
 .SUFFIXES:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
-#   
-File has not been updated.
+#  File has not been updated.
 
 compile:
-#  Implicit rule search has not been done.
+# 
+  Implicit rule search has not been done.
 #  Implicit/static pattern stem: `'
 #  File does not exist.
 #  File has been updated.
@@ -344,6 +339,6 @@ compile:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sat Jul 02 20:03:31 2022
+# Finished Make data base on Mon Jul 25 17:14:34 2022
 
  
