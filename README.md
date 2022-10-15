@@ -2,6 +2,8 @@
 
 This is a visualizer of the dijkstra pathfinding algorithm
 
+The program can be run within the folder of libraries
+
 -----HOW TO USE THE PROGRAM-------
 1. Place a starting position by pressing 's' and left clicking on a tile 
 2. Place a starting position by pressing 'e' and left clicking on a tile 
