@@ -192,6 +192,12 @@ int main()
                     sf::Vector2i mPos = sf::Mouse::getPosition(window);
                     int x = mPos.x / 10;
                     int y = mPos.y / 10;
+                    //prevent attempts to draw off of the screen
+                    if(x < 0) x = 0;
+                    if(x > 49) x = 49;
+                    if(y < 0) y = 0;
+                    if(y > 49) y = 49;
+
                     // invert pos calculation to find tile pos
                     if (placeStart && !hasStart)
                     { // place start
@@ -213,7 +219,7 @@ int main()
                             break; // prevent start from being covered
                         if (hasEnd && x == endPos.x && y == endPos.y)
                             break; // prevent end from being covered by walls
-
+                            
                         grid[x][y].setColor(sf::Color::Black);
                     }
                 }
